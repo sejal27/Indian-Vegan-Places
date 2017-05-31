@@ -1,5 +1,5 @@
 var map ;
-var mapcenter = {lat: 20.593684, lng: 78.96288};
+var mapcenter = {lat: 22.593684, lng: 77.234482};
 var initMap = function(){
     mapElement = document.getElementById('map');
 
@@ -53,8 +53,11 @@ var AddMarker = function(place){
 
     if(place.marker){                  
         google.maps.event.addListener(place.marker, 'click', function() {
+            self.currentPlace(place);
             highlightMarker(place.marker);
-            // zomatoData(place);
+            if (place.zomatoLoaded === false){
+                // zomatoData(place);
+            }
             populateInfoWindow(place.marker, smallInfowindow);
             $('#zomato').modal('open');
         });
@@ -108,20 +111,24 @@ var zomatoData = function(place){
 
     // If call was successful store restaurants in global locations[] array
     }).done( function(zomatoResponse) {
-        self.zomatoSuccess(true);
+        // self.zomatoError(false);
         place.rating(zomatoResponse.user_rating.aggregate_rating + "/5");
         place.image(zomatoResponse.featured_image);
         place.address(zomatoResponse.location.locality + ", " + zomatoResponse.location.city);
         place.url(zomatoResponse.url);
         place.menu(zomatoResponse.menu_url);
         place.cuisines(zomatoResponse.cuisines);
+        if (place.rating()){place.zomatoLoaded(true);}
         var location = {
             lat:place.location().lat,
             lng:place.location().lng
         };
     }).fail( function() {
-        self.zomatoSuccess(false);
+        // self.zomatoError(true);
+        alert("Failed to load Data from Zomato, please try again later.")
+        place.zomatoLoaded(true)
     })
+    console.log(self.zomatoError())
 };
 
 var Place = function(place){
@@ -139,19 +146,20 @@ var Place = function(place){
     self.cuisines = ko.observable();
     self.url = ko.observable();
     self.marker;
+    self.zomatoLoaded= ko.observable(false);
 };
 
 var viewModel = function(){
     var self = this;
     this.places = ko.observableArray([]);
-    this.zomatoSuccess = ko.observable(false);
+    // this.zomatoError = ko.observable(false);
     veganPlaces.forEach(function(p){
         self.places.push(new Place(p));
     });
 
-    for(var i=0; i<self.places().length; i++){
-        zomatoData(places()[i]);
-    }
+    // for(var i=0; i<self.places().length; i++){
+    //     zomatoData(places()[i]);
+    // }
 
     this.currentPlace = ko.observable(this.places()[0]);
 
@@ -161,6 +169,9 @@ var viewModel = function(){
             lat:place.location().lat,
             lng:place.location().lng
         };
+        if (place.zomatoLoaded === false){
+            // zomatoData(place);
+        }
         populateInfoWindow(place.marker, smallInfowindow);
         highlightMarker(place.marker);
         $('#zomato').modal('open'); 
