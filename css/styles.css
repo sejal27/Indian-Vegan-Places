@@ -1,12 +1,12 @@
-header, main, footer, nav {
+header, main, footer {
  padding-left: 300px;
 }
 
-/*#topimage{
+#topimage{
   height: 180px;
   padding-top:0;
 }
-*/
+
 #logo-container{
   font-weight: bold;
   font-size:1.4em;
@@ -14,26 +14,14 @@ header, main, footer, nav {
   /*padding-top: 0 !important;  */
 }
 
-@media only screen and (max-width : 992px) {
- header, main, footer, nav {
-   padding-left: 0;
- }
-}    
-
 #map {
   bottom:0px;
   height: 100%;
   left: 300px;
   position: absolute;
   right: 0px;
-}
-
-#zomato{
-  height:100%;
-  width:350px;
-  right:0;
-  max-height: none;
-  left:auto !important;
+  width:calc(100%-300px);
+  z-index:-1;
 }
 
 #zomato .food{
@@ -56,7 +44,7 @@ header, main, footer, nav {
 #zomato .brand-list{
   display:flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: start;
 }
 
 #zomato .brand-list li img{
@@ -68,3 +56,24 @@ header, main, footer, nav {
   padding-left: 10px;
   padding-right:10px;
 }
+
+@media only screen and (max-width : 992px) {
+ header, main, footer {
+   padding-left: 0;
+ }
+}
+
+@media only screen and (min-width:992px){
+ #zomato{
+   height:100%;
+   width:350px;
+   right:0;
+   max-height: none;
+   left:auto !important;
+ }
+
+ #zomato .brand-list{
+   justify-content: center;
+ }
+}
+
