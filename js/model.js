@@ -1,0 +1,222 @@
+var veganPlaces = [
+    {
+        "name": "Carrots",
+        "city": "Bengaluru",
+        "place_id": "ChIJuyWpr08UrjsR_tRuYPv6st4",
+        "res_id": "54407",
+        "location" : {
+            "lat": 12.938783,
+            "lng":77.625797
+        },
+        "facebook": "https://www.facebook.com/CarrotsTheHealthyKitchen/"
+    },
+    {
+        "name": "Paradigm Shift",
+        "city": "Bangaluru",
+        "place_id": "ChIJ9QIhBUMUrjsRWU_7y4BP6vo",
+        "res_id": "57585",
+        "location" : {
+            "lat": 12.937054,
+            "lng": 77.627289
+        },
+        "facebook": "https://www.facebook.com/paradigmshiftvegan/"
+    },
+    {
+        "name": "Terrassen Cafe",
+        "city": "Hyderabad",
+        "place_id": "ChIJARGAYcuQyzsRoySQpiZC7kY",
+        "res_id": "97544",
+        "location" : {
+            "lat": 17.427481,
+            "lng": 78.44701
+        },
+        "facebook":"https://www.facebook.com/poetsandoats/"
+    },
+    {
+        "name": "The Real Green Cafe",
+        "city": "Pune",
+        "place_id": "ChIJeeCbdgbBwjsRyqogEgSmQBg",
+        "res_id": "6506910",
+        "location" : {
+            "lat": 18.540361,
+            "lng": 73.898845
+        },
+        "facebook": "https://www.facebook.com/therealgreencafe/"
+    },
+    {
+        "name": "Granny's Bowl",
+        "city": "Pune",
+        "place_id": "ChIJw2udhPfAwjsRnb7okOhvBBA",
+        "res_id": "18385013",
+        "location" : {
+            "lat": 18.534746,
+            "lng": 73.876428
+        },
+        "facebook":"https://www.facebook.com/grannysbowl/"
+    },
+    {
+        "name": "Vegane R",
+        "city": "Chennai",
+        "place_id": "ChIJPRgQziBkUjoRoLXOzyGxTb4",
+        "res_id": "72690",
+        "location" : {
+            "lat": 13.082152,
+            "lng": 80.215027
+        },
+        "facebook":"https://www.facebook.com/veganerchennai/"
+    },
+    {
+        "name": "The Philosophy Club",
+        "city": "Ahmedabad",
+        "place_id": "ChIJ7XEHsvaEXjkRWkhnq5E-fec",
+        "res_id": "18354019",
+        "location" : {
+            "lat": 23.031919,
+            "lng": 72.562247
+        },
+        "facebook":"https://www.facebook.com/philosophyclubahmedabad/"
+    },
+    {
+        "name": "Bean Me Up",
+        "city": "Goa",
+        "place_id": "ChIJqcdk533pvzsRPs8sw79ID40",
+        "res_id": "16524109",
+        "location" : {
+            "lat": 15.596064,
+            "lng": 73.748082
+        },
+        "facebook":"https://www.facebook.com/beanmeupgoa/"
+    },
+    // {
+    //     "name": "MAA cafe",
+    //     "city": "Goa",
+    //     "place_id": "ChIJoyML1MjuvzsRgT90j21BXMw",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 15.641793,
+    //         "lng": 73.718644
+    //     },
+    //     "facebook":"https://www.facebook.com/maagoa/"
+    // },
+    // {
+    //     "name": "Ahimsa - The Vegan Cafe",
+    //     "city": "Shirdi",
+    //     "place_id": "ChIJa6PFBZdb3DsRcNGcDwsg5kA",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 19.772307,
+    //         "lng": 74.479192
+    //     },
+    //     "facebook":"https://www.facebook.com/ahimsathevegancafe/"
+    // },
+    {
+        "name": "The Holy Tree",
+        "city": "Ludhiana",
+        "place_id": "ChIJgTnI8UiCGjkR9N-JVx_OdQ8",
+        "res_id": "15721",
+        "location" : {
+            "lat": 30.877875,
+            "lng": 75.831862
+        },
+        "facebook":"https://www.facebook.com/thtnutrition/"
+    },
+    // {
+    //     "name": "Veganza Cafe",
+    //     "city": "Auroville",
+    //     "place_id": "ChIJVWop6RxkUzoRrJoj0wWdYGs",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 11.990982,
+    //         "lng": 79.833334
+    //     },
+    //     "facebook":"https://www.facebook.com/veganzacafe/"
+    // },
+    // {
+    //     "name": "Auroville Raw Food Centre",
+    //     "city": "Auroville",
+    //     "place_id": "ChIJSQqQ4fNmUzoRNy3uZy8_luU",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 12.015045,
+    //         "lng": 79.801788
+    //     },
+    //     "facebook":"https://www.facebook.com/Auroville-Raw-Food-Center-136196203068416/"
+    // },
+    // {
+    //     "name": "Dharma Swasti",
+    //     "city": "Auroville",
+    //     "place_id": "ChIJ6Vfbe6ZmUzoRGkE2bJx_rmw",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 11.991152,
+    //         "lng": 79.824463
+    //     },
+    //     "facebook":"https://www.facebook.com/eatwithconscience/"
+    // },
+    // {
+    //     "name": "Shantaram Raw",
+    //     "city": "Goa",
+    //     "place_id": "ChIJAwELsU3uvzsRYSjh8IEybPA",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 15.691083,
+    //         "lng": 73.704583
+    //     },
+    //     "facebook":"https://www.facebook.com/shantaram.raw/"
+    // },
+    // {
+    //     "name": "Greens Guesthouse",
+    //     "city": "Auroville",
+    //     "place_id": "ChIJ-eo8A8JmUzoRwDCl_ShnLY4",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 11.998595,
+    //         "lng": 79.801432
+    //     },
+    //     "facebook":"https://www.facebook.com/greensguesthouse/"
+    // },
+    {
+        "name": "Energy Home",
+        "city": "Auroville",
+        "place_id": "ChIJic4buNVjUzoRQETz4ZZiGfY",
+        "res_id": "3700211",
+        "location" : {
+            "lat": 11.936877,
+            "lng": 79.831744
+        },
+        "facebook":""
+    },
+    // {
+    //     "name": "Blue Caterpillar Vegan Café",
+    //     "city": "Dharamshala",
+    //     "place_id": "ChIJGy-rGs5WGzkR1wgWGOKXmA4",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 32.247605,
+    //         "lng": 76.329705
+    //     },
+    //     "facebook":"https://www.facebook.com/bluecaterpillarvegancafe/"
+    // },
+    // {
+    //     "name": "Kompassion",
+    //     "city": "Pune",
+    //     "place_id": "ChIJlZdZn1rAwjsRS-mV0eNc1O0",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 18.521494,
+    //         "lng": 73.878159
+    //     },
+    //     "facebook":"https://www.facebook.com/Kompassion-1651409431855856/"
+    // }
+    // {
+    //     "name": "Vegan Hearts Restaurant",
+    //     "city": "Ludhiana",
+    //     "place_id": "ChIJb8wr_0eCGjkRvdq0T3OMDYU",
+    //     "res_id": "",
+    //     "location" : {
+    //         "lat": 30.87682,
+    //         "lng": 75.830323
+    //     },
+    //     "facebook":"https://www.facebook.com/pages/Vegan-Hearts/206939606418264"
+    // }
+]
