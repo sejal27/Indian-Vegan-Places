@@ -7,12 +7,12 @@ header, main, footer {
   padding-top:0;
 }
 
-/*#logo-container{
+#logo-container{
   font-weight: bold;
   font-size:1.4em;
   color:black;
   padding-top: 0 !important;  
-}*/
+}
 
 #map {
   bottom:0px;
@@ -22,15 +22,6 @@ header, main, footer {
   right: 0px;
   width:calc(100%-300px);
   z-index:-1;
-}
-
-}
-#zomato{
-  height:100%;
-  width:350px;
-  right:0;
-  max-height: none;
-  left:auto !important;
 }
 
 #zomato .food{
@@ -67,13 +58,20 @@ header, main, footer {
 }
 
 @media only screen and (max-width : 992px) {
- header, main, footer {
-   padding-left: 0;
+   header, main, footer {
+     padding-left: 0;
+  }
+}
+@media only screen and (min-width:992px){
+   #zomato .brand-list{
+     justify-content: center;
+   }
+   #zomato{
+    height:100%;
+    width:350px;
+    right:0;
+    max-height: none;
+    left:auto !important;
+  }
 }
 
-/*@media only screen and (min-width:1200px){
- #zomato .brand-list{
-   justify-content: center;
- }
-}
-*/
