@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-    <ul data-bind='foreach: cities' id="citylist" class="dropdown-content" class="place-items">
+    <ul data-bind='foreach: cities' id="citylist" class="dropdown-content">
       <li><a href="#!" data-bind="text: $data, click: setFilter"></a></li>
     </ul>
 
@@ -29,8 +29,8 @@
         </li> -->
         <!-- <li data-bind="text: selectedCity"></li> -->
         <li>
-            <ul data-bind='foreach: filteredPlaces' id="filtered-list" class="place-items">
-                <li><a href="#!" data-bind="text: name, click: viewPlace"></a></li>
+            <ul data-bind='foreach: filteredPlaces' id="filtered-list">
+                <li><a href="#!" data-bind="text: name, click: viewPlace" class="place-items"></a></li>
             </ul>
         </li>
     </ul>
@@ -80,8 +80,8 @@
     $(".button-collapse").sideNav();
     $(".model").modal();
     $('#zomato').modal({dismissible: false});
-    $('select').material_select();
-    $('.place-items li').click(function() {
+    // $('select').material_select();
+    $('.place-items').click(function() {
       $(".button-collapse").sideNav('hide');
     });
    });
