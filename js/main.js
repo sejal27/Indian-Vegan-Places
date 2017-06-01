@@ -56,7 +56,7 @@ var AddMarker = function(place){
             self.currentPlace(place);
             highlightMarker(place.marker);
             if (place.zomatoLoaded === false){
-                // zomatoData(place);
+                zomatoData(place);
             }
             populateInfoWindow(place.marker, smallInfowindow);
             $('#zomato').modal('open');
@@ -107,7 +107,7 @@ var zomatoData = function(place){
         dataType: 'json',
         url: 'https://developers.zomato.com/api/v2.1/restaurant?res_id=' +  restaurant_id,
         headers: {Accept: 'application/json',
-                  'user-Key':'e48b55bccf7a24fa18416d63b8443ff7'}
+                  'user-Key':'294c4fb7f546e452818b1dce49a06d58'}
 
     // If call was successful store restaurants in global locations[] array
     }).done( function(zomatoResponse) {
@@ -126,9 +126,8 @@ var zomatoData = function(place){
     }).fail( function() {
         // self.zomatoError(true);
         alert("Failed to load Data from Zomato, please try again later.")
-        place.zomatoLoaded(true)
+        place.zomatoLoaded(false)
     })
-    console.log(self.zomatoError())
 };
 
 var showAllMarkers = function(){
@@ -181,18 +180,14 @@ var viewModel = function(){
 
     this.filteredPlaces = ko.computed(function(){
         if (self.selectedCity() == "All"){
-            // console.log(places())
             return self.places();
         }
         return ko.utils.arrayFilter(self.places(), function(place) {
             if(place.city() == self.selectedCity()){
-                // console.log(place)
                 return place;
             }
         })
     })
-
-    // console.log(this.filteredPlaces())
 
     this.setFilter = function(city){
         self.selectedCity(city)
@@ -201,16 +196,12 @@ var viewModel = function(){
                 map.setZoom(5);
                 map.setCenter(mapcenter);
                 places()[i].marker.setVisible(true);
-                console.log(self.selectedCity())
-                console.log(self.places()[i].marker)
             }
             else{
                 places()[i].marker.setVisible(false);
             }
         }
     }
-
-    // console.log(self.filteredPlaces())
 
     this.currentPlace = ko.observable(this.places()[0]);
 
@@ -221,7 +212,7 @@ var viewModel = function(){
             lng:place.location().lng
         };
         if (place.zomatoLoaded === false){
-            // zomatoData(place);
+            zomatoData(place);
         }
         populateInfoWindow(place.marker, smallInfowindow);
         highlightMarker(place.marker);
