@@ -91,7 +91,7 @@ function populateInfoWindow(marker, infowindow) {
 
 var highlightMarker = function(marker){
     // marker.setIcon(highlightedIcon);
-    map.setZoom(12);
+    map.setZoom(8);
     map.setCenter(marker.getPosition());
 }
 
@@ -152,36 +152,14 @@ var Place = function(place){
 var viewModel = function(){
     var self = this;
     this.places = ko.observableArray([]);
-    this.cities = ko.observableArray(["All", "Bangalore", "Hyderabad", "Ahmedabad", "Pune", "Chennai", "Goa", "Auroville", "Ludhiana"]);
-
     // this.zomatoError = ko.observable(false);
     veganPlaces.forEach(function(p){
         self.places.push(new Place(p));
     });
 
-
     // for(var i=0; i<self.places().length; i++){
     //     zomatoData(places()[i]);
     // }
-    this.filteredPlaces = ko.computed(function(){return self.places()});
-    console.log(self.filteredPlaces())
-    this.setFilter = function(city){
-        self.filteredPlaces = ko.pureComputed(function(){
-            if (city == "All"){
-                ko.utils.arrayForEach(self.places(), function(place){
-                    place.marker.setVisible(true);
-                })
-                map.setZoom(5);
-                map.setCenter(mapcenter);
-                return self.places();
-            }
-            return ko.utils.arrayFilter(self.places(), function(place) {
-                if(place.city() != city){place.marker.setVisible(false);}
-                else {place.marker.setVisible(true); return place;}
-        }, self)
-            })
-        console.log(self.filteredPlaces())
- }
 
     this.currentPlace = ko.observable(this.places()[0]);
 

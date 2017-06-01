@@ -1,7 +1,7 @@
 var veganPlaces = [
     {
         "name": "Carrots",
-        "city": "Bengaluru",
+        "city": "Bangalore",
         "place_id": "ChIJuyWpr08UrjsR_tRuYPv6st4",
         "res_id": "54407",
         "location" : {
@@ -12,7 +12,7 @@ var veganPlaces = [
     },
     {
         "name": "Paradigm Shift",
-        "city": "Bangaluru",
+        "city": "Bangalore",
         "place_id": "ChIJ9QIhBUMUrjsRWU_7y4BP6vo",
         "res_id": "57585",
         "location" : {
