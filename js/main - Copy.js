@@ -19,6 +19,7 @@ var initMap = function(){
 
     for(var i=0; i<self.places().length; i++){
         AddMarker(self.places()[i]);
+        // console.log(self.places()[i].marker)
     };
 
     // This function takes in a COLOR, and then creates a new marker
@@ -131,6 +132,26 @@ var zomatoData = function(place){
     console.log(self.zomatoError())
 };
 
+var showAllMarkers = function(){
+    ko.utils.arrayForEach(self.places(), function(place){
+        place.marker.setVisible(true);
+    })         
+}
+
+var removeAllMarkers = function(){
+    ko.utils.arrayForEach(self.places(), function(place){
+        place.marker.setVisible(false);
+    })
+}
+
+var showSelectedMarker = function(selectedPlace){
+    ko.utils.arrayForEach(self.places(), function(place){
+        if (place.name() == selectedPlace.name()){
+            place.marker.setVisible(true);
+        }
+    })
+}
+
 var Place = function(place){
     var self = this;
     self.name = ko.observable(place.name);
@@ -152,14 +173,35 @@ var Place = function(place){
 var viewModel = function(){
     var self = this;
     this.places = ko.observableArray([]);
+    this.cities = ko.observableArray(["All", "Bangalore", "Hyderabad", "Ahmedabad", "Pune", "Chennai", "Goa", "Auroville", "Ludhiana"]);
+    this.selectedCity = ko.observable();
     // this.zomatoError = ko.observable(false);
     veganPlaces.forEach(function(p){
         self.places.push(new Place(p));
     });
 
-    // for(var i=0; i<self.places().length; i++){
-    //     zomatoData(places()[i]);
-    // }
+    this.filteredPlaces = ko.computed(function(){
+        if ((!self.selectedCity()) || (self.selectedCity() == 'All')){
+            // showAllMarkers();
+            // map.setZoom(5);
+            // map.setCenter(mapcenter);
+            // console.log(places());
+            return self.places();
+        }
+        
+            return ko.utils.arrayFilter(self.places(), function(place) {
+                // removeAllMarkers();
+                // console.log(place)
+                if(place.city() == self.selectedCity()){
+                    // showSelectedMarker(place);
+                    // console.log(place)
+                    return place;
+                }
+            })
+        
+    })
+
+    console.log(self.filteredPlaces())
 
     this.currentPlace = ko.observable(this.places()[0]);
 

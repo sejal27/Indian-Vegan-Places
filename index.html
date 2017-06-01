@@ -13,20 +13,21 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-<!--     <ul data-bind='foreach: cities' id="citylist" class="dropdown-content" class="place-items">
+    <ul data-bind='foreach: cities' id="citylist" class="dropdown-content" class="place-items">
       <li><a href="#!" data-bind="text: $data, click: setFilter"></a></li>
-    </ul> -->
+    </ul>
 
     <ul id="slide-out" class="side-nav fixed">
         <li>
             <a href="#!" class="brand-logo" id="logo-container">Indian Vegan Places</a>
         </li>
-<!--         <li>
+        <li>
             <a class="dropdown-button" href="#!" data-activates="citylist">Cities<i class="material-icons right">arrow_drop_down</i></a>
-        </li> -->
-        <li class="input-field" id="city-select">
-            <select data-bind="options: cities, value: selectedCity"></select>
         </li>
+        <!-- <li class="input-field" id="city-select">
+            <select data-bind="options: cities, value: selectedCity"></select>
+        </li> -->
+        <!-- <li data-bind="text: selectedCity"></li> -->
         <li>
             <ul data-bind='foreach: filteredPlaces' id="filtered-list" class="place-items">
                 <li><a href="#!" data-bind="text: name, click: viewPlace"></a></li>
