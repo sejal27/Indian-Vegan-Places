@@ -107,7 +107,7 @@ var zomatoData = function(place){
         dataType: 'json',
         url: 'https://developers.zomato.com/api/v2.1/restaurant?res_id=' +  restaurant_id,
         headers: {Accept: 'application/json',
-                  'user-Key':'294c4fb7f546e452818b1dce49a06d58'}
+                  'user-Key':'KEY'} //https://developers.zomato.com/api - Request API key here
 
     // If call was successful store restaurants in global locations[] array
     }).done( function(zomatoResponse) {
