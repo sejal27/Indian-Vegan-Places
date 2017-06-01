@@ -1,181 +1,169 @@
+// when google maps api gets failed
+var googleError = function(){
+    self.error_message('Failed to load GoogleMaps Api');
+    self.apiError(true);
+};
+// when google maps api gets failed
+var FourSquareError = function(){
+    self.error_message('Failed to load Foursquare Api');
+    self.apiError(true);
+};
+
 var map ;
-var mapcenter = {lat: 22.593684, lng: 77.234482};
+this.marker;
 var initMap = function(){
-    mapElement = document.getElementById('map');
-
-    map = new google.maps.Map(mapElement, {
-        center: mapcenter,
-        zoom: 5,
-        mapTypeControl: false
+    var pyrmont = {lat: 17.3850, lng: 78.4867};
+    // displays the requested map content in map div 
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: pyrmont,
+        zoom: 12
     });
+    // displays location information in window when marker clicked
+    infowindow = new google.maps.InfoWindow();
               
-    // Style the markers a bit. This will be our listing marker icon.
-    defaultIcon = makeMarkerIcon('0091ff');
-    // Create a "highlighted location" marker color for when the user
-    // mouses over the marker.
-    highlightedIcon = makeMarkerIcon('FFFF24');
-    
-    smallInfowindow = new google.maps.InfoWindow();
-
-    for(var i=0; i<self.places().length; i++){
-        AddMarker(self.places()[i]);
+    for(var i=0; i<places.length; i++){
+        AddMarker(places[i]);
     };
-
-    // This function takes in a COLOR, and then creates a new marker
-    // icon of that color. The icon will be 21 px wide by 34 high, have an origin
-    // of 0, 0 and be anchored at 10, 34).
-    function makeMarkerIcon(markerColor) {
-      var markerImage = new google.maps.MarkerImage(
-        'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
-        '|40|_|%E2%80%A2',
-        new google.maps.Size(21, 34),
-        new google.maps.Point(0, 0),
-        new google.maps.Point(10, 34),
-        new google.maps.Size(21,34));
-      return markerImage;
-    }
-    // bounds = new google.maps.LatLngBounds();
+  
 };
 
+
+// Adds the marker by getting place location details
 var AddMarker = function(place){
-    this.pos = { 
-        lat:place.location().lat,
-        lng:place.location().lng 
-    };
-
-    place.marker = new google.maps.Marker({
-        map: map,
-        position: this.pos,
-        title: place.name(),
-        icon:defaultIcon,
-        animation: google.maps.Animation.DROP
-    });
-
-    if(place.marker){                  
-        google.maps.event.addListener(place.marker, 'click', function() {
-            self.currentPlace(place);
-            highlightMarker(place.marker);
-            if (place.zomatoLoaded === false){
-                // zomatoData(place);
-            }
-            populateInfoWindow(place.marker, smallInfowindow);
-            $('#zomato').modal('open');
+        var myLatLng = { lat:place.location.lat,
+                         lng:place.location.lng };
+        self.marker = new google.maps.Marker({
+            map:map,
+            animation: google.maps.Animation.DROP,
+            position: myLatLng
         });
+        if(self.marker){
+            self.markersArray().push([myLatLng,
+                                     self.marker]);                    
+            google.maps.event.addListener(marker, 'click', function() {
+                stopAnimation();
+                startAnimation(myLatLng)
+                FoursquareData(place);
+            });
+        }
+};
 
-       google.maps.event.addListener(place.marker, 'mouseover', function() {
-          place.marker.setIcon(highlightedIcon);
-        });
-
-       google.maps.event.addListener(place.marker, 'mouseout', function() {
-          place.marker.setIcon(defaultIcon);
-        });
+// removes all the markers
+var removeMarkers = function(){
+    for(var x=0; x<self.markersArray().length; x++ ){
+        self.markersArray()[x][1].setMap(null);
     }
 };
+// shows all the markers    
+var showMarkers = function(){
+    for(var i=0; i<self.markersArray().length; i++ ){
+        self.markersArray()[i][1].setMap(map);
+    }
+}; 
 
-// This function populates the infowindow when the marker is clicked. We'll only allow
-// one infowindow which will open at the marker that is clicked, and populate based
-// on that markers position.
-function populateInfoWindow(marker, infowindow) {
-  // Check to make sure the infowindow is not already opened on this marker.
-  if (infowindow.marker != marker) {
-        infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>');
-        infowindow.open(map, marker);
-        // Make sure the marker property is cleared if the infowindow is closed.
-        infowindow.addListener('closeclick', function() {
-          infowindow.marker = null;
-          resetMarkerHighlight(marker);
+// starts the marker bounce animation
+var startAnimation = function(myLatLng){
+    ko.computed(function(){
+            ko.utils.arrayForEach(self.markersArray(), function(m){
+                if(myLatLng.lat === m[0].lat && myLatLng.lng ===m[0].lng){
+                    m[1].setAnimation(google.maps.Animation.BOUNCE);
+                }
+            });
         });
-   }
 }
 
-var highlightMarker = function(marker){
-    // marker.setIcon(highlightedIcon);
-    map.setZoom(8);
-    map.setCenter(marker.getPosition());
+// stops the marker bounce animation
+var stopAnimation = function(){
+    for(var i=0; i<self.markersArray().length; i++ ){
+        self.markersArray()[i][1].setAnimation(null);
+    }
 }
 
-var resetMarkerHighlight = function(marker){
-    map.setZoom(5);
-    map.setCenter(mapcenter);
-}
+// Gets the location data from Foursquare
+var FoursquareData = function(place){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+    var today = ""+yyyy+mm+dd+"";
 
-var zomatoData = function(place){
-    var restaurant_id = place.res_id()
+    var venue_id = place.venue_id;
+    var client_id = "BWUSFIWLOPWY0F3RPSBEER3Y5AVNORL4SJ5UUH2LG2RLUSIH";
+    var client_secret = "0DFTYZIDWMTDRMGHMSXZ1RZL12IEMDBGWVSAA0XNJ0K1R3AV";
+    var FoursquareUrl = "https://api.foursquare.com/v2/venues/"+venue_id+"?client_id="+client_id+"&client_secret="+client_secret+"&v="+today+"" ;
+    
     $.ajax({
-        type: 'GET',
-        dataType: 'json',
-        url: 'https://developers.zomato.com/api/v2.1/restaurant?res_id=' +  restaurant_id,
-        headers: {Accept: 'application/json',
-                  'user-Key':'e48b55bccf7a24fa18416d63b8443ff7'}
-
-    // If call was successful store restaurants in global locations[] array
-    }).done( function(zomatoResponse) {
-        // self.zomatoError(false);
-        place.rating(zomatoResponse.user_rating.aggregate_rating + "/5");
-        place.image(zomatoResponse.featured_image);
-        place.address(zomatoResponse.location.locality + ", " + zomatoResponse.location.city);
-        place.url(zomatoResponse.url);
-        place.menu(zomatoResponse.menu_url);
-        place.cuisines(zomatoResponse.cuisines);
-        if (place.rating()){place.zomatoLoaded(true);}
-        var location = {
-            lat:place.location().lat,
-            lng:place.location().lng
-        };
-    }).fail( function() {
-        // self.zomatoError(true);
-        alert("Failed to load Data from Zomato, please try again later.")
-        place.zomatoLoaded(true)
+        url:FoursquareUrl,
+        dataType:"json",
+        async:true        
+    }).success(function(data){
+            self.des_name(data.response.venue.name);
+            self.rating(data.response.venue.rating);
+            var image_prefix = data.response.venue.bestPhoto.prefix;
+            var image_suffix = data.response.venue.bestPhoto.suffix;
+            self.location_image(image_prefix +"320x200"+ image_suffix);
+            if(data.response.venue.tips.groups[0].items[0].text){
+                self.review(data.response.venue.tips.groups[0].items[0].text);
+            }   
+    }).error(function(data){
+        FourSquareError();
     })
-    console.log(self.zomatoError())
+    
 };
 
-var Place = function(place){
-    var self = this;
-    self.name = ko.observable(place.name);
-    self.city = ko.observable(place.city);
-    self.place_id = ko.observable(place.place_id);
-    self.res_id = ko.observable(place.res_id);
-    self.location = ko.observable(place.location);
-    self.facebook = ko.observable(place.facebook);
-    self.image = ko.observable();
-    self.rating = ko.observable();
-    self.address = ko.observable();
-    self.menu = ko.observable();
-    self.cuisines = ko.observable();
-    self.url = ko.observable();
-    self.marker;
-    self.zomatoLoaded= ko.observable(false);
-};
+
+
+
 
 var viewModel = function(){
     var self = this;
-    this.places = ko.observableArray([]);
-    // this.zomatoError = ko.observable(false);
-    veganPlaces.forEach(function(p){
-        self.places.push(new Place(p));
+    this.markersArray = ko.observableArray([]);
+    this.query = ko.observable();
+    this.location_image = ko.observable();
+    this.des_name = ko.observable();
+    this.rating = ko.observable();
+    this.review = ko.observable();
+    this.apiError = ko.observable(false);
+    this.error_message = ko.observable();
+    // filters the places array when searched in a query input
+    this.searchResults = ko.computed(function() {
+        q = self.query();
+        if(!q){
+            showMarkers();
+            return places;
+        }
+        else{
+            removeMarkers();
+            return ko.utils.arrayFilter(places, function(place) {
+                if(place.name.toLowerCase().indexOf(q) >= 0) {
+                    AddMarker(place);
+                    return place;
+                }    
+            });
+        }
     });
 
-    // for(var i=0; i<self.places().length; i++){
-    //     zomatoData(places()[i]);
-    // }
-
-    this.currentPlace = ko.observable(this.places()[0]);
-
+    // when name of the location clicked displays infowindow
     this.viewPlace = function(place){
-        self.currentPlace(place);
-        var location = {
-            lat:place.location().lat,
-            lng:place.location().lng
-        };
-        if (place.zomatoLoaded === false){
-            // zomatoData(place);
-        }
-        populateInfoWindow(place.marker, smallInfowindow);
-        highlightMarker(place.marker);
-        $('#zomato').modal('open'); 
-    };   
-}
+        var check_myLatLng = {lat:place.location.lat,
+                               lng:place.location.lng};
+        stopAnimation();
+        startAnimation(check_myLatLng);
+        FoursquareData(place);       
+    };  
+    this.closeDesc = function(){
+        self.des_name(null);
+    };
+     
+};     
 
-ko.applyBindings(viewModel);
+  
+    
+ko.applyBindings(viewModel);  
