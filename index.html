@@ -13,20 +13,19 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-    <ul data-bind='foreach: cities' id="citylist" class="dropdown-content" class="place-items">
+<!--     <ul data-bind='foreach: cities' id="citylist" class="dropdown-content" class="place-items">
       <li><a href="#!" data-bind="text: $data, click: setFilter"></a></li>
-    </ul>
+    </ul> -->
 
     <ul id="slide-out" class="side-nav fixed">
         <li>
-            <!-- <div class="userView" id="topimage"> -->
-              <!-- <div class="background">
-                <img style="width:100%; max-width:300px;" src="img/SideNavImage.jpg">
-              </div> -->
-              <a href="#!" class="brand-logo" id="logo-container">Indian Vegan Places</a>
-            <!-- </div> -->
+            <a href="#!" class="brand-logo" id="logo-container">Indian Vegan Places</a>
         </li>
-        <li><a class="dropdown-button" href="#!" data-activates="citylist">Cities<i class="material-icons right">arrow_drop_down</i></a>
+<!--         <li>
+            <a class="dropdown-button" href="#!" data-activates="citylist">Cities<i class="material-icons right">arrow_drop_down</i></a>
+        </li> -->
+        <li class="input-field" id="city-select">
+            <select data-bind="options: cities, value: selectedCity"></select>
         </li>
         <li>
             <ul data-bind='foreach: filteredPlaces' id="filtered-list" class="place-items">
@@ -80,6 +79,7 @@
     $(".button-collapse").sideNav();
     $(".model").modal();
     $('#zomato').modal({dismissible: false});
+    $('select').material_select();
     $('.place-items li').click(function() {
       $(".button-collapse").sideNav('hide');
     });
