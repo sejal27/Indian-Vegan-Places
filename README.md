@@ -25,7 +25,7 @@ A list of selected vegan places in India, displayed on Google maps. Displays Zom
 - [Zomato API](developers.zomato.com)
 
 ## How to Use
-1. Download all the files in the same folder.
+1. Download all the files in the same folder. Request Zomato API Key at https://developers.zomato.com/api/ and update it on main.js file.
 2. Open index.html in a web browser.
 3. Click a restaurant to view its details. Close place's infowindow to return to the full map view.
 4. Use Cities drop-down list to filter places based on any city.
