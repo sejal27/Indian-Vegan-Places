@@ -1,6 +1,6 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-# Vegan Places in India on the Map!
+### Vegan Places in India on the Map!
 
 # Read Complete Documentation here: https://sejal27.github.io/Indian-Vegan-Places/
 
