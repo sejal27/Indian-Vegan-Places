@@ -5,7 +5,7 @@
 ## Table of Contents
 - [Background](#background)
 - [Author](#author)
-- [Tools, APIs and Frameworks](#tools,-apis-and-frameworks)
+- [Tools, APIs and Frameworks](#tools-apis-and-frameworks)
 - [How to Use](#how-to-use)
 - [Source Files](#source-files)
 - [Javascript Documentation](#javascript-documentation)
