@@ -2,6 +2,8 @@
 
 # Vegan Places in India on the Map!
 
+# Read Complete Documentation here: https://sejal27.github.io/Indian-Vegan-Places/
+
 ## Table of Contents
 - [Background](#background)
 - [Author](#author)
