@@ -2,11 +2,6 @@ header, main, footer {
  padding-left: 300px;
 }
 
-#topimage{
-  height: 180px;
-  padding-top:0;
-}
-
 #logo-container{
   font-weight: bold;
   font-size:1.4em;
@@ -14,6 +9,7 @@ header, main, footer {
   padding-top: 0 !important;  
 }
 
+/*Google Map Styles*/
 #map {
   bottom:0px;
   height: 100%;
@@ -24,6 +20,7 @@ header, main, footer {
   z-index:-1;
 }
 
+/*Place Modal dialog styles*/
 #zomato .food{
   max-width: 350px;
   width: 100%;
@@ -57,17 +54,14 @@ header, main, footer {
   padding-right:10px;
 }
 
-#city-select{
-  padding-left:10px;
-  padding-right:10px;
-  font-size:1.2em;
-}
-
+/*Media queries*/
 @media only screen and (max-width : 992px) {
    header, main, footer {
      padding-left: 0;
   }
 }
+
+/**Sets modal dialog at the bottom for small and medium screens**/
 @media only screen and (min-width:992px){
    #zomato .brand-list{
      justify-content: center;
