@@ -65,8 +65,13 @@
                 </li>
                 <!-- /ko -->
             </ul>
+            <!-- ko if: image -->
             <img class="middle-align food z-depth-2" data-bind="attr: {src: image}" alt="Restauarnat food item image"/>
             <br>
+            <!-- /ko -->
+            <!-- ko ifnot: image -->
+            <div>Image not available</div>
+            <!-- /ko -->
         </div>
          <p class="credits"><em>Zomato API has been used to get the information for this place.</em></p>      
     </div>

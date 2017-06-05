@@ -123,6 +123,7 @@ function populateInfoWindow(marker, infowindow) {
  * @param {object} marker Google Maps Marker
  */
 var highlightMarker = function(marker){
+    resetALLMarkerAnimations();
     marker.setAnimation(google.maps.Animation.BOUNCE);
     map.setZoom(8);
     map.setCenter(marker.getPosition());
@@ -138,13 +139,22 @@ var resetMarkerHighlight = function(marker){
     marker.setAnimation(null);
 };
 /**
+ * Resets animations for all the markers before a new marker is highlighted
+ */
+var resetALLMarkerAnimations = function(){
+    ko.utils.arrayForEach(self.places(), function(place){
+        place.marker.setAnimation(null);
+    });
+}
+
+/**
  * AJAX call, made using Zomato API. To request for API key, visit : https://developers.zomato.com/api
  * Gets the following information from Zomato based on the restaurant ID:
  * Rating, Image, Address, Zomato URL, Menu URL, and Cuisines
  * @param  {object} place Place for which zomata data should be retrieved
  */
 var zomatoData = function(place){
-    var restaurant_id = place.res_id
+    var restaurant_id = place.res_id;
     $.ajax({
         type: 'GET',
         dataType: 'json',
@@ -154,7 +164,7 @@ var zomatoData = function(place){
 
     }).done( function(zomatoResponse){
         place.rating(zomatoResponse.user_rating.aggregate_rating || "No Zomato rating available");
-        place.image(zomatoResponse.featured_image || "Image not available");
+        place.image(zomatoResponse.featured_image);
         locality = zomatoResponse.location.locality || '';
         city = zomatoResponse.location.city || place.city;
         place.address(locality + ", " + city);
@@ -172,7 +182,7 @@ var zomatoData = function(place){
         //     lng:place.location.lng
         // };
     }).fail( function() {
-        alert("Failed to load Data from Zomato, please try again later.")
+        alert("Failed to load Data from Zomato, please try again later.");
         place.zomatoLoaded = false;
     });
 };
@@ -192,7 +202,7 @@ var Place = function(place){
     self.cuisines = ko.observable();
     self.url = ko.observable();
     self.city = place.city;
-    self.marker; //Google maps marker object, not knockout observable
+    self.marker = null; //Google maps marker object, not knockout observable
     self.res_id = place.res_id;
     self.location = place.location;
     self.zomatoLoaded = false;
@@ -213,7 +223,7 @@ var ViewModel = function(){
 
     // Extract unique cities from the places array
     self.uniqueCities = ko.computed(function () {
-        var cities = ko.utils.arrayMap(self.places(), function (place) {return place.city;})
+        var cities = ko.utils.arrayMap(self.places(), function (place) {return place.city;});
         return ko.utils.arrayGetDistinctValues(cities).sort();
     });
 
@@ -240,7 +250,7 @@ var ViewModel = function(){
      * @param  {string} city city selected by the user
      */
     this.setFilter = function(city){
-        self.selectedCity(city)
+        self.selectedCity(city);
         for (var i=0; i<self.places().length; i++){
             if ((places()[i].city == self.selectedCity()) || (self.selectedCity() == 'All')){
                 map.setZoom(5);

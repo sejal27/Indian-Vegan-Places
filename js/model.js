@@ -93,28 +93,6 @@ var veganPlaces = [
         },
         "facebook":"https://www.facebook.com/beanmeupgoa/"
     },
-    // {
-    //     "name": "MAA cafe",
-    //     "city": "Goa",
-    //     "place_id": "ChIJoyML1MjuvzsRgT90j21BXMw",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 15.641793,
-    //         "lng": 73.718644
-    //     },
-    //     "facebook":"https://www.facebook.com/maagoa/"
-    // },
-    // {
-    //     "name": "Ahimsa - The Vegan Cafe",
-    //     "city": "Shirdi",
-    //     "place_id": "ChIJa6PFBZdb3DsRcNGcDwsg5kA",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 19.772307,
-    //         "lng": 74.479192
-    //     },
-    //     "facebook":"https://www.facebook.com/ahimsathevegancafe/"
-    // },
     {
         "name": "The Holy Tree",
         "city": "Ludhiana",
@@ -126,61 +104,6 @@ var veganPlaces = [
         },
         "facebook":"https://www.facebook.com/thtnutrition/"
     },
-    // {
-    //     "name": "Veganza Cafe",
-    //     "city": "Auroville",
-    //     "place_id": "ChIJVWop6RxkUzoRrJoj0wWdYGs",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 11.990982,
-    //         "lng": 79.833334
-    //     },
-    //     "facebook":"https://www.facebook.com/veganzacafe/"
-    // },
-    // {
-    //     "name": "Auroville Raw Food Centre",
-    //     "city": "Auroville",
-    //     "place_id": "ChIJSQqQ4fNmUzoRNy3uZy8_luU",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 12.015045,
-    //         "lng": 79.801788
-    //     },
-    //     "facebook":"https://www.facebook.com/Auroville-Raw-Food-Center-136196203068416/"
-    // },
-    // {
-    //     "name": "Dharma Swasti",
-    //     "city": "Auroville",
-    //     "place_id": "ChIJ6Vfbe6ZmUzoRGkE2bJx_rmw",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 11.991152,
-    //         "lng": 79.824463
-    //     },
-    //     "facebook":"https://www.facebook.com/eatwithconscience/"
-    // },
-    // {
-    //     "name": "Shantaram Raw",
-    //     "city": "Goa",
-    //     "place_id": "ChIJAwELsU3uvzsRYSjh8IEybPA",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 15.691083,
-    //         "lng": 73.704583
-    //     },
-    //     "facebook":"https://www.facebook.com/shantaram.raw/"
-    // },
-    // {
-    //     "name": "Greens Guesthouse",
-    //     "city": "Auroville",
-    //     "place_id": "ChIJ-eo8A8JmUzoRwDCl_ShnLY4",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 11.998595,
-    //         "lng": 79.801432
-    //     },
-    //     "facebook":"https://www.facebook.com/greensguesthouse/"
-    // },
     {
         "name": "Energy Home",
         "city": "Auroville",
@@ -191,38 +114,5 @@ var veganPlaces = [
             "lng": 79.831744
         },
         "facebook":""
-    },
-    // {
-    //     "name": "Blue Caterpillar Vegan Café",
-    //     "city": "Dharamshala",
-    //     "place_id": "ChIJGy-rGs5WGzkR1wgWGOKXmA4",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 32.247605,
-    //         "lng": 76.329705
-    //     },
-    //     "facebook":"https://www.facebook.com/bluecaterpillarvegancafe/"
-    // },
-    // {
-    //     "name": "Kompassion",
-    //     "city": "Pune",
-    //     "place_id": "ChIJlZdZn1rAwjsRS-mV0eNc1O0",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 18.521494,
-    //         "lng": 73.878159
-    //     },
-    //     "facebook":"https://www.facebook.com/Kompassion-1651409431855856/"
-    // }
-    // {
-    //     "name": "Vegan Hearts Restaurant",
-    //     "city": "Ludhiana",
-    //     "place_id": "ChIJb8wr_0eCGjkRvdq0T3OMDYU",
-    //     "res_id": "",
-    //     "location" : {
-    //         "lat": 30.87682,
-    //         "lng": 75.830323
-    //     },
-    //     "facebook":"https://www.facebook.com/pages/Vegan-Hearts/206939606418264"
-    // }
-]
+    }
+];
