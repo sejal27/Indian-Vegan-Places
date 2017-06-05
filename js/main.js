@@ -6,6 +6,11 @@
 var map ; 
 var mapcenter = {lat: 22.593684, lng: 77.234482}; //Sets India as a center of the map
 
+//Google maps error handler
+function googleError(){
+    alert('Failed to load Google map data.');
+}
+
 /**
  * Initiates google map and adds markers to the map.
  * @returns {object} returns the google map object
@@ -29,8 +34,8 @@ var initMap = function(){
 
     //Adds markers for all the places in the ViewModel
     for(var i=0; i<self.places().length; i++){
-        AddMarker(self.places()[i]);
-    };
+        addMarker(self.places()[i]);
+    }
 
     // This function takes in a COLOR, and then creates a new marker
     // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -51,12 +56,12 @@ var initMap = function(){
  * Adds a marker for each place passed as a parameter and sets event listeners for the markers.
  * @param  {object} place Knockout observable object, a place for which the google map marker needs to be added.
  */
-var AddMarker = function(place){
+var addMarker = function(place){
 
     //Create a location object based on lat, lng of the place
     this.pos = { 
-        lat:place.location().lat,
-        lng:place.location().lng 
+        lat:place.location.lat,
+        lng:place.location.lng 
     };
 
     /** 
@@ -75,7 +80,7 @@ var AddMarker = function(place){
         google.maps.event.addListener(place.marker, 'click', function() {
             self.currentPlace(place); //Set the place as current place
             highlightMarker(place.marker); //Highlight the place marker
-            if (!place.zomatoLoaded()){
+            if (!place.zomatoLoaded){
                 zomatoData(place); //Load Zomato data, if not already loaded
             }
             populateInfoWindow(place.marker, smallInfowindow); //Populate InfoWindow for the marker
@@ -118,10 +123,10 @@ function populateInfoWindow(marker, infowindow) {
  * @param {object} marker Google Maps Marker
  */
 var highlightMarker = function(marker){
-    // marker.setIcon(highlightedIcon);
+    marker.setAnimation(google.maps.Animation.BOUNCE);
     map.setZoom(8);
     map.setCenter(marker.getPosition());
-}
+};
 
 /**
  * Removes marker highlights, resets the zoom lever and sets the map center back to original
@@ -130,7 +135,8 @@ var highlightMarker = function(marker){
 var resetMarkerHighlight = function(marker){
     map.setZoom(5);
     map.setCenter(mapcenter);
-}
+    marker.setAnimation(null);
+};
 /**
  * AJAX call, made using Zomato API. To request for API key, visit : https://developers.zomato.com/api
  * Gets the following information from Zomato based on the restaurant ID:
@@ -138,7 +144,7 @@ var resetMarkerHighlight = function(marker){
  * @param  {object} place Place for which zomata data should be retrieved
  */
 var zomatoData = function(place){
-    var restaurant_id = place.res_id()
+    var restaurant_id = place.res_id
     $.ajax({
         type: 'GET',
         dataType: 'json',
@@ -148,26 +154,27 @@ var zomatoData = function(place){
 
     }).done( function(zomatoResponse) {
         console.log("zomato data loaded")
-        place.rating(zomatoResponse.user_rating.aggregate_rating + "/5");
-        place.image(zomatoResponse.featured_image);
+        place.rating(zomatoResponse.user_rating.aggregate_rating || "No Zomato rating available");
+        place.image(zomatoResponse.featured_image || "Image not available");
         place.address(zomatoResponse.location.locality + ", " + zomatoResponse.location.city);
-        place.url(zomatoResponse.url);
-        place.menu(zomatoResponse.menu_url);
-        place.cuisines(zomatoResponse.cuisines);
+        place.address(place.address || "Address not available")
+        place.url(zomatoResponse.url || "#!");
+        place.menu(zomatoResponse.menu_url || "#!");
+        place.cuisines(zomatoResponse.cuisines || "No cuisines information available.");
         //Indicates that data has alredy been loaded.
         //Zomato API allows 1000 calls per day. Checking if the data has already been loaded, saves the 
         //number of API calls to be made per browser session.
         if (place.rating()){
-            place.zomatoLoaded(true); 
+            place.zomatoLoaded = true; 
         }
-        var location = {
-            lat:place.location().lat,
-            lng:place.location().lng
-        };
+        // var location = {
+        //     lat:place.location.lat,
+        //     lng:place.location.lng
+        // };
     }).fail( function() {
         alert("Failed to load Data from Zomato, please try again later.")
-        place.zomatoLoaded(false)
-    })
+        place.zomatoLoaded = false;
+    });
 };
 
 /**
@@ -177,10 +184,6 @@ var zomatoData = function(place){
 var Place = function(place){
     var self = this;
     self.name = ko.observable(place.name);
-    self.city = ko.observable(place.city);
-    self.place_id = ko.observable(place.place_id);
-    self.res_id = ko.observable(place.res_id);
-    self.location = ko.observable(place.location);
     self.facebook = ko.observable(place.facebook);
     self.image = ko.observable();
     self.rating = ko.observable();
@@ -188,13 +191,16 @@ var Place = function(place){
     self.menu = ko.observable();
     self.cuisines = ko.observable();
     self.url = ko.observable();
+    self.city = place.city;
     self.marker; //Google maps marker object, not knockout observable
-    self.zomatoLoaded= ko.observable(false);
+    self.res_id = place.res_id;
+    self.location = place.location;
+    self.zomatoLoaded = false;
 };
 /**
  * Knowckout ViewModel function
  */
-var viewModel = function(){
+var ViewModel = function(){
     var self = this;
     this.places = ko.observableArray([]);
     // this.cities = ko.observableArray(["All","Bangalore", "Hyderabad", "Ahmedabad", "Pune", "Chennai", "Goa", "Auroville", "Ludhiana"]);
@@ -206,8 +212,8 @@ var viewModel = function(){
     });
 
     // Extract unique cities from the places array
-    self.uniqueCities = ko.dependentObservable(function () {
-        var cities = ko.utils.arrayMap(self.places(), function (place) {return place.city();})
+    self.uniqueCities = ko.computed(function () {
+        var cities = ko.utils.arrayMap(self.places(), function (place) {return place.city;})
         return ko.utils.arrayGetDistinctValues(cities).sort();
     });
 
@@ -215,7 +221,7 @@ var viewModel = function(){
     this.cities = ko.observableArray(['All']);
     ko.utils.arrayForEach(self.uniqueCities(), function(city){
         self.cities.push(city);
-    })
+    });
 
     // Computed observable, that contains list of places for a selected city
     this.filteredPlaces = ko.computed(function(){
@@ -223,12 +229,11 @@ var viewModel = function(){
             return self.places();
         }
         return ko.utils.arrayFilter(self.places(), function(place) {
-            if(place.city() == self.selectedCity()){
+            if(place.city == self.selectedCity()){
                 return place;
             }
-        })
-    })
-
+        });
+    });
     
     /**
      * Shows only markers that belong to the selected city
@@ -237,16 +242,18 @@ var viewModel = function(){
     this.setFilter = function(city){
         self.selectedCity(city)
         for (var i=0; i<self.places().length; i++){
-            if ((places()[i].city() == self.selectedCity()) || (self.selectedCity() == 'All')){
+            if ((places()[i].city == self.selectedCity()) || (self.selectedCity() == 'All')){
                 map.setZoom(5);
                 map.setCenter(mapcenter);
                 places()[i].marker.setVisible(true);
+                places()[i].marker.setAnimation(null);
             }
             else{
                 places()[i].marker.setVisible(false);
             }
         }
-    }
+        smallInfowindow.close();
+    };
 
     //By default sets the first place in the array as a current place.
     this.currentPlace = ko.observable(this.places()[0]);
@@ -260,17 +267,24 @@ var viewModel = function(){
     this.viewPlace = function(place){
         self.currentPlace(place);
         var location = {
-            lat:place.location().lat,
-            lng:place.location().lng
+            lat:place.location.lat,
+            lng:place.location.lng
         };
-        if (!place.zomatoLoaded()){
+        if (!place.zomatoLoaded){
             zomatoData(place);
         }
         populateInfoWindow(place.marker, smallInfowindow);
         highlightMarker(place.marker);
         $('#zomato').modal('open'); 
     };   
-}
+};
+
+ko.bindingHandlers.showModal = {
+    init: function (element, valueAccessor) {},
+    update: function (element, valueAccessor) {
+        $(element).modal('open');    
+    }
+};
 
 //Apply knockout bindings
-ko.applyBindings(viewModel);
+ko.applyBindings(ViewModel);

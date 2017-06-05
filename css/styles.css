@@ -1,8 +1,10 @@
-header, main, footer {
+header, 
+main, 
+footer {
  padding-left: 300px;
 }
 
-#logo-container{
+#logo-container {
   font-weight: bold;
   font-size:1.4em;
   color:black;
@@ -21,35 +23,35 @@ header, main, footer {
 }
 
 /*Place Modal dialog styles*/
-#zomato .food{
+#zomato .food {
   max-width: 350px;
   width: 100%;
   margin-bottom:15px;
 }
 
-#zomato .close-btn{
+#zomato .close-btn {
   padding-right:10px;
   padding-left:10px;
   margin-right:0;
   margin-top:0;
 }
 
-#zomato .modal-content{
+#zomato .modal-content {
   padding:13px;
 }
 
-#zomato .brand-list{
+#zomato .brand-list {
   display:flex;
   flex-flow: row nowrap;
   justify-content: start;
 }
 
-#zomato .brand-list li img{
+#zomato .brand-list li img {
   width:100%;
   max-width: 30px;
 }
 
-#zomato .brand-list li{
+#zomato .brand-list li {
   padding-left: 10px;
   padding-right:10px;
 }
@@ -63,10 +65,10 @@ header, main, footer {
 
 /**Sets modal dialog at the bottom for small and medium screens**/
 @media only screen and (min-width:992px){
-   #zomato .brand-list{
+   #zomato .brand-list {
      justify-content: center;
    }
-   #zomato{
+   #zomato {
     height:100%;
     width:350px;
     right:0;
