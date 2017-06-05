@@ -3,14 +3,10 @@
 <head>
     <title>Indian Vegan Places</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="js/knockout.js"></script>   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-    <script src="https://use.fontawesome.com/105f8c4bf0.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -45,10 +41,10 @@
     </div>
   
     <!--Modal Dialog that displays place information-->
-    <div id="zomato" class="modal bottom-sheet" data-bind="showModal">
+    <div id="zomato" class="modal bottom-sheet">
         
         <div class="modal-content" data-bind="with:currentPlace">
-            <a href="#!" class="close-btn modal-action modal-close waves-effect waves-green btn-flat btn-small right"><i class="fa fa-window-close" aria-hidden="true"></i></i>
+            <a href="#!" class="close-btn modal-action modal-close waves-effect waves-green btn-flat btn-small right"><i class="fa fa-window-close" aria-hidden="true"></i>
             </a><br>
             <h5 data-bind="text: name"></h5>
             <p><i class="fa fa-star-half-o" aria-hidden="true"></i><span data-bind="text: rating"></span></p>
@@ -72,26 +68,16 @@
             <img class="middle-align food z-depth-2" data-bind="attr: {src: image}" alt="Restauarnat food item image"/>
             <br>
         </div>
-       
+         <p class="credits"><em>Zomato API has been used to get the information for this place.</em></p>      
     </div>
      </main>
-
-<script>
-   $( document ).ready(function(){
-    $(".dropdown-button").dropdown(); //Initialize Cities Dropdown
-    $(".button-collapse").sideNav(); //Intialize slide-out navigation
-    $(".model").modal(); // Initialize modal dialog
-    $('#zomato').modal({dismissible: false}); //Modal dialog cannot be dismissed with a click 
-    $('.place-items').click(function() {
-      $(".button-collapse").sideNav('hide'); //Hide the side navigation when a place is clicked on small and medium devices
-    });
-   });
-</script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<script src="https://use.fontawesome.com/105f8c4bf0.js"></script>
+<script src="js/knockout.js"></script>
+<script src="js/initialize.js"></script>
 <script src="js/model.js"></script>
-
 <script src="js/main.js"></script>
-
 <!--Load google maps asynchronously and set InitMap as callback function-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5ok0Uk9SUPX23p9VEPwRZfCPaxTlvVpw&v=3&libraries=places&callback=initMap" onerror="googleError()" async defer></script>
 

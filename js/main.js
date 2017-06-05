@@ -150,14 +150,14 @@ var zomatoData = function(place){
         dataType: 'json',
         url: 'https://developers.zomato.com/api/v2.1/restaurant?res_id=' +  restaurant_id,
         headers: {Accept: 'application/json',
-            'user-Key':'KEY'} //https://developers.zomato.com/api - Request API key here
+            'user-Key':'294c4fb7f546e452818b1dce49a06d58'} //https://developers.zomato.com/api - Request API key here
 
-    }).done( function(zomatoResponse) {
-        console.log("zomato data loaded")
+    }).done( function(zomatoResponse){
         place.rating(zomatoResponse.user_rating.aggregate_rating || "No Zomato rating available");
         place.image(zomatoResponse.featured_image || "Image not available");
-        place.address(zomatoResponse.location.locality + ", " + zomatoResponse.location.city);
-        place.address(place.address || "Address not available")
+        locality = zomatoResponse.location.locality || '';
+        city = zomatoResponse.location.city || place.city;
+        place.address(locality + ", " + city);
         place.url(zomatoResponse.url || "#!");
         place.menu(zomatoResponse.menu_url || "#!");
         place.cuisines(zomatoResponse.cuisines || "No cuisines information available.");
@@ -277,13 +277,6 @@ var ViewModel = function(){
         highlightMarker(place.marker);
         $('#zomato').modal('open'); 
     };   
-};
-
-ko.bindingHandlers.showModal = {
-    init: function (element, valueAccessor) {},
-    update: function (element, valueAccessor) {
-        $(element).modal('open');    
-    }
 };
 
 //Apply knockout bindings

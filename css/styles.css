@@ -36,6 +36,11 @@ footer {
   margin-top:0;
 }
 
+#zomato .credits {
+  padding-left: 10px;
+  padding-right:10px;
+}
+
 #zomato .modal-content {
   padding:13px;
 }
